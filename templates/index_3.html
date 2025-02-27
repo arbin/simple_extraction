@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Scraper & Downloader</title>
+</head>
+<body>
+    <h1>Enter a URL to Extract PDFs</h1>
+    <form method="post">
+        <input type="url" name="url" placeholder="Enter website URL" required>
+        <button type="submit">Extract PDFs</button>
+    </form>
+
+    {% if pdf_links %}
+        <h2>Found PDFs:</h2>
+        <ul>
+            {% for pdf in pdf_links %}
+                <li><a href="{{ pdf }}" target="_blank">{{ pdf }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if downloaded_files %}
+        <h2>Downloaded PDFs:</h2>
+        <ul>
+            {% for pdf in downloaded_files %}
+                <li>{{ pdf }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

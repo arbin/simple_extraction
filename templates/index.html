@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extraction Using OpenAI</title>
+</head>
+<body>
+    <h1>Upload a PDF to Extract Profile Information</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" accept="application/pdf" required>
+        <button type="submit">Extract</button>
+    </form>
+	{% if extracted_text %}
+			<h2>Extracted Text</h2>
+			<pre>{{ extracted_text }}</pre>
+		{% endif %}
+    {% if labeled_info %}
+        <h2>Extracted Profile Information</h2>
+        <pre>{{ labeled_info | tojson(indent=4) }}</pre>
+
+        {% if xml_filename %}
+            <h3>Download XML</h3>
+            <a href="{{ url_for('download_file', filename=xml_filename) }}" download>
+                <button>Download XML</button>
+            </a>
+        {% endif %}
+    {% endif %}
+</body>
+</html>

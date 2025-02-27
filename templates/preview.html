@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Extracted Data</title>
+</head>
+<body>
+    <h1>Extracted Information</h1>
+
+    <h2>Names:</h2>
+    <ul>
+        {% for name in structured_data.names %}
+        <li>{{ name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Addresses:</h2>
+    <ul>
+        {% for address in structured_data.addresses %}
+        <li>{{ address }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Phone Numbers:</h2>
+    <ul>
+        {% for phone in structured_data.phone_numbers %}
+        <li>{{ phone }}</li>
+        {% endfor %}
+    </ul>
+
+    <button onclick="convertToXML()">Convert to XML</button>
+
+    <script>
+        function convertToXML() {
+            fetch('/convert-to-xml', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    filename: "{{ filename }}",
+                    names: {{ structured_data.names | tojson }},
+                    addresses: {{ structured_data.addresses | tojson }},
+                    phone_numbers: {{ structured_data.phone_numbers | tojson }}
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.xml_file) {
+                    window.location.href = "/download/" + data.xml_file;
+                } else {
+                    alert("Error converting to XML.");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -4,27 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extraction Using OpenAI</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        pre {
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: left;
+            overflow: auto;
+            max-height: 300px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Upload a PDF to Extract Profile Information</h1>
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf_file" accept="application/pdf" required>
-        <button type="submit">Extract</button>
-    </form>
-	{% if extracted_text %}
-			<h2>Extracted Text</h2>
-			<pre>{{ extracted_text }}</pre>
-		{% endif %}
-    {% if labeled_info %}
-        <h2>Extracted Profile Information</h2>
-        <pre>{{ labeled_info | tojson(indent=4) }}</pre>
+    <div class="container">
+        <h1>Upload a PDF to Extract Profile Information</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="file" name="pdf_file" accept="application/pdf" required>
+            <button type="submit">Extract</button>
+        </form>
 
-        {% if xml_filename %}
-            <h3>Download XML</h3>
-            <a href="{{ url_for('download_file', filename=xml_filename) }}" download>
-                <button>Download XML</button>
-            </a>
+        {% if extracted_text %}
+            <h2>Extracted Text</h2>
+            <pre>{{ extracted_text }}</pre>
         {% endif %}
-    {% endif %}
+
+        {% if labeled_info %}
+            <h2>Extracted Profile Information</h2>
+            <pre>{{ labeled_info | tojson(indent=4) }}</pre>
+
+            {% if xml_filename %}
+                <h3>Download XML</h3>
+                <a href="{{ url_for('download_file', filename=xml_filename) }}" download class="download-btn">
+                    <button>Download XML</button>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
 </body>
 </html>

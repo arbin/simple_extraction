@@ -4,30 +4,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Scraper & Downloader</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Internal CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input[type="url"] {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        li {
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Enter a URL to Extract PDFs</h1>
-    <form method="post">
-        <input type="url" name="url" placeholder="Enter website URL" required>
-        <button type="submit">Extract PDFs</button>
-    </form>
+    <div class="container">
+        <h1>Enter a URL to Extract PDFs</h1>
+        <form method="post">
+            <input type="url" name="url" placeholder="Enter website URL" required>
+            <button type="submit">Extract PDFs</button>
+        </form>
 
-    {% if pdf_links %}
-        <h2>Found PDFs:</h2>
-        <ul>
-            {% for pdf in pdf_links %}
-                <li><a href="{{ pdf }}" target="_blank">{{ pdf }}</a></li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+        {% if pdf_links %}
+            <h2>Found PDFs:</h2>
+            <ul>
+                {% for pdf in pdf_links %}
+                    <li><a href="{{ pdf }}" target="_blank">{{ pdf }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-    {% if downloaded_files %}
-        <h2>Downloaded PDFs:</h2>
-        <ul>
-            {% for pdf in downloaded_files %}
-                <li>{{ pdf }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+        {% if downloaded_files %}
+            <h2>Downloaded PDFs:</h2>
+            <ul>
+                {% for pdf in downloaded_files %}
+                    <li>{{ pdf }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 </body>
 </html>
